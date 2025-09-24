@@ -1,3 +1,5 @@
+
+
 import java.io.File;
 import java.util.Scanner;
 import java.util.Arrays;
@@ -28,6 +30,7 @@ public class AccountManager {
             sc.close();
         } catch(Exception e){
             System.out.println("Khong the doc file: " + e.getMessage());
+            return;
         }
     }
 
@@ -50,32 +53,12 @@ public class AccountManager {
     //             return accounts[i];
     //     return null;
     // }
-    public UserAccount login() {
-        Scanner sc = new Scanner(System.in);
-        UserAccount found = null;
-        int attempts = 0;
-
-        do {
-            System.out.print("Nhap username: ");
-            String username = sc.nextLine();
-
-            System.out.print("Nhap password: ");
-            String password = sc.nextLine();
-
-            for (int i = 0; i < count; i++) {
-                if (accounts[i].login(username, password)) {
-                    found = accounts[i];
-                    break;
-                }
+ public UserAccount authenticate(String username, String password) {
+        for (int i = 0; i < count; i++) {
+            if (accounts[i].login(username, password)) {
+                return accounts[i];
             }
-
-            if (found == null) {
-                attempts++;
-                System.out.println("Sai tai khoan hoac mat khau. Con " + (3 - attempts) + " lan thu lai.");
-            }
-
-        } while (found == null && attempts < 3);
-
-        return found;
+        }   
+        return null;
     }
 }
